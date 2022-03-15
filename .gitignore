@@ -36,5 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+### Log file ###
+spring.log
+
 ### Yml file ###
 application.yml
