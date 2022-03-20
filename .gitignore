@@ -38,6 +38,7 @@ out/
 
 ### Log file ###
 spring.log
+*.log
 
 ### Yml file ###
 application.yml
