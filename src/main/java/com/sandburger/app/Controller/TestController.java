@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping(value = "/")
     public String TestResponse(){
-        return "test success";
+        return "slack test";
     }
 }
