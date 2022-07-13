@@ -1,7 +1,10 @@
 package com.sandburger.app.Entity;
 
 import com.sandburger.app.Util.BaseEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,7 +18,4 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "refresh_key")
     String refresh_key;
-
-
-
 }
