@@ -16,6 +16,13 @@ public class UserEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long user_idx;
 
+
     @Column(name = "refresh_key")
     String refresh_key;
+
+    @Builder
+    public UserEntity(Long user_idx, String refresh_key) {
+        this.user_idx = user_idx;
+        this.refresh_key = refresh_key;
+    }
 }
