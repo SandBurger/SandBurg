@@ -28,8 +28,6 @@ public class DiaryEntity extends BaseEntity {
 
     @Builder
     public DiaryEntity(String record, Integer sequence){
-        Assert.hasText(record, "record Must Not be Empty!");
-        Assert.notNull(sequence, "record Must Not be Empty!");
         this.record = record;
         this.sequence = sequence;
     }

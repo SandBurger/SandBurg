@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterAfter(jwtAuthenticationFilter, LogoutFilter.class);
         http.authorizeRequests()
-                    .antMatchers("/oauth2login", "/").permitAll()
-                    .anyRequest().authenticated();
+                .antMatchers("/oauth2login", "/", "/diary").permitAll()
+                .anyRequest().authenticated();
         http.oauth2Login()
                 .loginPage("/oauth2login")
                 .userInfoEndpoint().userService(customOAuth2UserService)
