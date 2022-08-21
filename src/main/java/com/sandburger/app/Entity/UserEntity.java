@@ -10,19 +10,23 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long user_idx;
 
+    @Column(name = "name", unique = true)
+    String name;
 
-    @Column(name = "refresh_key")
-    String refresh_key;
+    @Column(name = "email")
+    String email;
 
     @Builder
-    public UserEntity(Long user_idx, String refresh_key) {
+    public UserEntity(Long user_idx, String name, String email) {
         this.user_idx = user_idx;
-        this.refresh_key = refresh_key;
+        this.name = name;
+        this.email = email;
     }
 }
