@@ -17,16 +17,12 @@ public class UserEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long user_idx;
 
-    @Column(name = "name", unique = true)
-    String name;
-
     @Column(name = "email")
     String email;
 
     @Builder
-    public UserEntity(Long user_idx, String name, String email) {
+    public UserEntity(Long user_idx, String email) {
         this.user_idx = user_idx;
-        this.name = name;
         this.email = email;
     }
 }
