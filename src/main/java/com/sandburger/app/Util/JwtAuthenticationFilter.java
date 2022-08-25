@@ -37,12 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     email = jwtUtil.getUid(accessToken);
                 }
                 if (email != null) {
-                    UserEntity savedUser = userRepository.findByEmail(email);
-                    if (savedUser == null) {
-                        throw new UsernameNotFoundException("해당 이메일로 가입된 사용자가 없습니다.");
-                    }
 
-                    if (jwtUtil.validToken(email, savedUser)) {
+                    if (jwtUtil.validToken(accessToken)) {
                         Authentication authentication = jwtUtil.getAuthentication(accessToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
@@ -51,7 +47,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 exception.getMessage();
             }
         }
-
 
         filterChain.doFilter(request, response);
     }

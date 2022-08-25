@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtUtil {
-    public final static long ACCESS_TOKEN_VALIDATION_SECOND = 1000L * 10;
+    public final static long ACCESS_TOKEN_VALIDATION_SECOND = 1000L * 60 * 30;
     public final static long REFRESH_TOKEN_VALIDATION_SECOND = 1000L * 60 * 24 * 2;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -104,7 +104,7 @@ public class JwtUtil {
     private Claims getBody(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(secret)
+                    .setSigningKey(secret.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -131,13 +131,8 @@ public class JwtUtil {
         return getBody(accessToken).get("uid", String.class);
     }
 
-    public boolean validToken(String accessToken, UserEntity savedUser) {
-        final String email = getUid(accessToken);
-
-        return (email.equals(savedUser.getEmail()) && !isTokenExpired(accessToken));
-    }
-
     public boolean validToken(String accessToken) {
+
         return this.getBody(accessToken) != null;
     }
 
