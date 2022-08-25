@@ -18,7 +18,7 @@ public class DiaryController {
     }
 
 
-    @PostMapping
+    @PostMapping(value = "/post")
     @ApiOperation(value = "post diary", notes = "posting each diary")
     public ResponseEntity postDiary(@RequestBody DiaryDTO.DiaryDefault diary){
         return diaryService.postDiary(diary.getDiary(), diary.getSequence());

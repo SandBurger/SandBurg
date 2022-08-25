@@ -74,11 +74,11 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveToken(HttpServletRequest request) throws Exception{
         String headerValue = request.getHeader(AUTHORIZATION_HEADER);
 
         if (headerValue == null) {
-            return null;
+            throw new Exception("no header");
         }
 
         if (headerValue.startsWith(TOKEN_PREFIX)) {
