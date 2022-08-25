@@ -12,7 +12,6 @@ import java.util.Map;
 public class OAuth2Attributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
-    private String name;
     private String email;
 
     public static OAuth2Attributes of(String provider, String attributeKey,
@@ -29,7 +28,6 @@ public class OAuth2Attributes {
         return OAuth2Attributes.builder()
                 .attributes(attributes)
                 .nameAttributeKey(attributeKey)
-                .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .build();
     }
@@ -38,7 +36,6 @@ public class OAuth2Attributes {
         Map<String, Object> map = new HashMap<>();
         map.put("id", nameAttributeKey);
         map.put("key", nameAttributeKey);
-        map.put("name", name);
         map.put("email", email);
 
         return map;
