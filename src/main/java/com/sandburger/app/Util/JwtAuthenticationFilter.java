@@ -1,12 +1,8 @@
 package com.sandburger.app.Util;
 
-import com.sandburger.app.Entity.UserEntity;
-import com.sandburger.app.Repository.UserRepository;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -22,18 +18,15 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
 
-    private RequestMatcher requestMatcher = new AntPathRequestMatcher("/main/**");
+    private RequestMatcher mainRequestMatcher = new AntPathRequestMatcher("/main/**");
+    private RequestMatcher refreshRequestMatcher = new AntPathRequestMatcher("/refresh/**");
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (!requestMatcher.matches(request)) {
-            String accessToken = null;
-            try {
-                accessToken = jwtUtil.resolveToken(request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+        if (!mainRequestMatcher.matches(request) && !refreshRequestMatcher.matches(request)) {
+            String accessToken = jwtUtil.resolveToken(request);
+
 
             String email = null;
 
@@ -43,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
                 if (email != null) {
 
-                    if (jwtUtil.validToken(accessToken)) {
+                    if (jwtUtil.validToken(accessToken) || !jwtUtil.isTokenExpired(accessToken)) {
                         Authentication authentication = jwtUtil.getAuthentication(accessToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
