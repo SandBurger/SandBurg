@@ -17,12 +17,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final CustomOAuth2FailureHandler customOAuth2FailureHandler;
     private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeRequests()
-                .antMatchers("/oauth2/**", "/auth/**", "/main/**").permitAll()
+                .antMatchers("/oauth2/**", "/auth/**", "/main/**", "/refresh/**").permitAll()
                 .anyRequest().authenticated();
 
         http.oauth2Login()
@@ -43,6 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private JwtAuthenticationFilter tokenAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtUtil, userRepository);
+        return new JwtAuthenticationFilter(jwtUtil);
     }
 }
