@@ -2,7 +2,9 @@ package com.sandburger.app.Service;
 
 import com.sandburger.app.DTO.DiaryDTO;
 import com.sandburger.app.Entity.DiaryEntity;
+import com.sandburger.app.Entity.UserEntity;
 import com.sandburger.app.Repository.DiaryRepository;
+import com.sandburger.app.Repository.UserRepository;
 import com.sandburger.app.Util.CommonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +15,18 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class DiaryService {
     private final DiaryRepository diaryRepository;
+    private final UserRepository userRepository;
 
-    public DiaryService(DiaryRepository diaryRepository) {
+    public DiaryService(DiaryRepository diaryRepository, UserRepository userRepository) {
         this.diaryRepository = diaryRepository;
+        this.userRepository = userRepository;
+
     }
 
-    public ResponseEntity postDiary(String record, Integer sequence){
+    public ResponseEntity postDiary(String record, String userEmail){
         try {
-            DiaryEntity diary = DiaryEntity.builder().record(record).sequence(sequence).build();
+            UserEntity user = userRepository.findByEmail(userEmail);
+            DiaryEntity diary = DiaryEntity.builder().record(record).user(user).build();
             diaryRepository.save(diary);
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -32,7 +38,7 @@ public class DiaryService {
     public DiaryDTO.DiaryOutput getDiaryById(Long id){
         try{
             DiaryEntity diary = diaryRepository.findById(id).get();
-            DiaryDTO.DiaryOutput diaryOutput = DiaryDTO.DiaryOutput.builder().id(diary.getDiary_idx()).diary(diary.getRecord()).sequence( diary.getSequence()).build();
+            DiaryDTO.DiaryOutput diaryOutput = DiaryDTO.DiaryOutput.builder().id(diary.getDiary_idx()).diary(diary.getRecord()).build();
             return diaryOutput;
         }
         catch(EntityNotFoundException e){

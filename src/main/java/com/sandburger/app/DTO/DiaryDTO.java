@@ -9,14 +9,12 @@ public class DiaryDTO {
     @Setter
     public static class DiaryDefault{
         private String diary;
-        private Integer sequence;
 
         public DiaryDefault(){}
 
         @Builder
-        public DiaryDefault(String diary, Integer sequence){
+        public DiaryDefault(String diary){
             this.diary = diary;
-            this.sequence = sequence;
         }
     }
 
@@ -25,16 +23,14 @@ public class DiaryDTO {
     public static class DiaryOutput{ // diary abstract class 추가 가능성
         private Long id;
         private String diary;
-        private Integer sequence;
 
         public DiaryOutput(){
         }
 
         @Builder
-        public DiaryOutput(String diary, Integer sequence, Long id){
+        public DiaryOutput(String diary, Long id){
             this.id = id;
             this.diary = diary;
-            this.sequence = sequence;
         }
     }
 }
