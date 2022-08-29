@@ -132,13 +132,14 @@ public class JwtUtil {
     }
 
     public boolean validToken(String accessToken) {
+
         return this.getBody(accessToken) != null;
     }
 
     public Claims getExpiredTokenClaims(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(secret.getBytes())
+                    .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
@@ -17,20 +16,19 @@ import javax.persistence.*;
 public class DiaryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long diary_idx;
+    private Long diary_idx;
 
 
     @Column(name = "record")
-    String record;
+    private String record;
 
-    @Column(name = "sequence")
-    Integer sequence;
+    @ManyToOne
+    @JoinColumn(name = "user_idx")
+    private UserEntity user;
 
     @Builder
-    public DiaryEntity(String record, Integer sequence){
-        Assert.hasText(record, "record Must Not be Empty!");
-        Assert.notNull(sequence, "record Must Not be Empty!");
+    public DiaryEntity(String record, UserEntity user){
         this.record = record;
-        this.sequence = sequence;
+        this.user = user;
     }
 }

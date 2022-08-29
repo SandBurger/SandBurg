@@ -3,6 +3,7 @@ package com.sandburger.app.Util;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -41,6 +42,8 @@ public class SwaggerConfig {
         produces.add("application/json;charset=UTF-8");
         return produces;
     }
+
+
 
     private ApiInfo getApiInfo() {
         return new ApiInfoBuilder()

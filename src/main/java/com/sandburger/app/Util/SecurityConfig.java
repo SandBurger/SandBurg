@@ -28,16 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/oauth2/**", "/auth/**", "/main/**", "/refresh/**").permitAll()
                 .anyRequest().authenticated();
 
+
+
         http.oauth2Login()
                 .authorizationEndpoint()
-                    .baseUri("/oauth2/authorize")
-                    .and()
+                .baseUri("/oauth2/authorize")
+                .and()
                 .redirectionEndpoint()
-                    .baseUri("/*/oauth2/code/*")
-                    .and()
+                .baseUri("/*/oauth2/code/*")
+                .and()
                 .userInfoEndpoint()
-                    .userService(oAuth2UserService)
-                    .and()
+                .userService(oAuth2UserService)
+                .and()
                 .successHandler(customOAuth2SuccessHandler)
                 .failureHandler(customOAuth2FailureHandler);
 

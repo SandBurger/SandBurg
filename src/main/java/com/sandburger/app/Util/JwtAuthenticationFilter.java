@@ -23,8 +23,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private RequestMatcher refreshRequestMatcher = new AntPathRequestMatcher("/refresh/**");
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         if (!mainRequestMatcher.matches(request) && !refreshRequestMatcher.matches(request)) {
             String accessToken = jwtUtil.resolveToken(request);
+
 
             String email = null;
 
